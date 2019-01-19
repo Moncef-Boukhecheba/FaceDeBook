@@ -31,9 +31,9 @@ class APIManager
         return $return;
     }
 
-    public function put($Pass, $id){  
+    public function put($key, $value, $id){  
         $postfields = array(
-            'Password' => $Pass,
+            $key => $value,
             'id_visiteur' => $id
         );
         
@@ -74,7 +74,7 @@ class APIManager
 }
 
 $Api = new APIManager("http://localhost:3000/visiteurs");
-$res = $Api->put("Moncef", 2);
+$res = $Api->put("Nom", "Moncef", 2);
 
 var_dump(json_decode($res));
 ?>
