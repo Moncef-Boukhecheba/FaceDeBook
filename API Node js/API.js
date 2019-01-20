@@ -51,7 +51,7 @@ con.connect(function(err) {
 // On specifie quelle URI va enclencher l'API pour les requêtes PUT ET POST
  myRouter.route('/visiteurs')
  .post(function(req,res){
- 	con.query("INSERT INTO visiteurs (Nom, prenom, email, password, id_centre, access) VALUES (?,?,?,?,?,?)", 
+ 	con.query("INSERT INTO visiteurs (Nom, prenom, email, password, id_centre, access, Avatar) VALUES (?,?,?,?,?,?,null)", 
  		[req.body.Nom, req.body.Prenom, req.body.Email, req.body.Password, req.body.Id_centre, req.body.Access],
  		
  		function (err, result, fields) {
@@ -60,13 +60,12 @@ con.connect(function(err) {
  			});
  		})	
  .put(function(req,res){
- 	con.query("UPDATE visiteurs SET  WHERE id_visiteur = ?", 
+ 	con.query("UPDATE visiteurs SET WHERE id_visiteur = ?", 
  		[req.body.Password, req.body.id_visiteur], function (err, result, fields) {
  		if (err) throw err;
  		res.send(result);
  		});
-
- });
+});
 
 // On spécifie à l'application d'utiliser le routeur qu'on vient de créer 
 app.use(myRouter);  

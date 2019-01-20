@@ -112,6 +112,7 @@ DROP TABLE IF EXISTS `concerner`;
 CREATE TABLE `concerner` (
   `Id_produit` int(11) NOT NULL,
   `Id_commande` int(11) NOT NULL,
+  `Quantite` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Id_produit`,`Id_commande`),
   KEY `Concerner_Commandes0_FK` (`Id_commande`),
   CONSTRAINT `Concerner_Commandes0_FK` FOREIGN KEY (`Id_commande`) REFERENCES `commandes` (`Id_commande`),
@@ -398,4 +399,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-20 19:23:28
+-- Dump completed on 2019-01-20 20:03:51
