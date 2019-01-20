@@ -63,7 +63,6 @@ con.connect(function(err) {
 
  	con.query("UPDATE visiteurs SET password = ? WHERE id_visiteur = ?", 
  		[req.body.Password, req.body.id_visiteur], function (err, result, fields) {
- 		
  		if (err) throw err;
  		res.send(result);
  		});
