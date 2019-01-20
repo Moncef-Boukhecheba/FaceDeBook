@@ -28,7 +28,7 @@ CREATE TABLE `centres` (
   `Telephone_centre` varchar(25) NOT NULL,
   `Email_centre` varchar(100) NOT NULL,
   PRIMARY KEY (`Id_centre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `centres` (
 
 LOCK TABLES `centres` WRITE;
 /*!40000 ALTER TABLE `centres` DISABLE KEYS */;
+INSERT INTO `centres` VALUES (1,'Alger','055555555','algerie@viacesi.fr');
 /*!40000 ALTER TABLE `centres` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,10 +55,12 @@ CREATE TABLE `visiteurs` (
   `Email` varchar(100) NOT NULL,
   `Password` varchar(25) NOT NULL,
   `Id_centre` int(11) NOT NULL,
+  `Access` int(11) NOT NULL,
+  `Avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Id_visiteur`),
-  UNIQUE KEY `Visiteurs_AK` (`Id_centre`),
-  CONSTRAINT `Visiteurs_Centres_FK` FOREIGN KEY (`Id_centre`) REFERENCES `centres` (`Id_centre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `Visiteurs_CENTRES_FK` (`Id_centre`),
+  CONSTRAINT `Visiteurs_CENTRES_FK` FOREIGN KEY (`Id_centre`) REFERENCES `centres` (`Id_centre`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +69,7 @@ CREATE TABLE `visiteurs` (
 
 LOCK TABLES `visiteurs` WRITE;
 /*!40000 ALTER TABLE `visiteurs` DISABLE KEYS */;
+INSERT INTO `visiteurs` VALUES (1,'Giovana','Giorno','jojo@jojo.jojo','ILVAMOURIR',1,0,NULL),(2,'S','P','P','Moncef',1,0,NULL);
 /*!40000 ALTER TABLE `visiteurs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -78,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-17 20:38:51
+-- Dump completed on 2019-01-20 19:25:15

@@ -34,9 +34,9 @@ con.connect(function(err) {
 });
 
 // On specifie quelle URI va enclencher l'API pour les requêtes GET et DELETE
- myRouter.route('/visiteurs/:id_visiteur')
+ myRouter.route('/visiteurs/:email/:password')
  .get(function(req,res){
- 	con.query("SELECT * FROM visiteurs WHERE id_visiteur = ?", req.params.id_visiteur, function (err, result, fields) {
+ 	con.query("SELECT * FROM visiteurs WHERE Email = ? AND Password = ?", [req.params.email, req.param.password], function (err, result, fields) {
  		if (err) throw err;
  		res.send(result);
  	});
@@ -60,8 +60,7 @@ con.connect(function(err) {
  			});
  		})	
  .put(function(req,res){
-
- 	con.query("UPDATE visiteurs SET password = ? WHERE id_visiteur = ?", 
+ 	con.query("UPDATE visiteurs SET  WHERE id_visiteur = ?", 
  		[req.body.Password, req.body.id_visiteur], function (err, result, fields) {
  		if (err) throw err;
  		res.send(result);

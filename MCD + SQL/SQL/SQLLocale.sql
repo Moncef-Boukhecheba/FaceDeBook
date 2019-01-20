@@ -227,9 +227,13 @@ CREATE TABLE `manifestations` (
   `Image_manifestation` varchar(255) NOT NULL,
   `Type_manifestation` varchar(25) NOT NULL,
   `Active` tinyint(1) NOT NULL,
-  `Nbr_Likes` int(11) NOT NULL,
-  `Nbr_Commentaires` int(11) NOT NULL,
-  PRIMARY KEY (`Id_manifestation`)
+  `Nbr_Likes` int(11) DEFAULT NULL,
+  `Nbr_Commentaires` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id_manifestation`),
+  KEY `Id_proposeur_FK_idx` (`Id_Proposeur`),
+  KEY `Id_validateur_FK` (`Id_Validateur`),
+  CONSTRAINT `Id_proposeur_FK` FOREIGN KEY (`Id_Proposeur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Id_validateur_FK` FOREIGN KEY (`Id_Validateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -243,32 +247,33 @@ LOCK TABLES `manifestations` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `nofifications`
+-- Table structure for table `notifications`
 --
 
-DROP TABLE IF EXISTS `nofifications`;
+DROP TABLE IF EXISTS `notifications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `nofifications` (
+CREATE TABLE `notifications` (
   `Id_notif` int(11) NOT NULL AUTO_INCREMENT,
   `Contenu_notif` varchar(1000) NOT NULL,
   `Type_notif` varchar(25) NOT NULL,
   `Id_notificateur` int(11) NOT NULL,
   `Id_notifie` int(11) NOT NULL,
-  `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_notif`),
-  KEY `Nofifications_Visiteurs_Copie_FK` (`Id_visiteur`),
-  CONSTRAINT `Nofifications_Visiteurs_Copie_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  KEY `Id_notificateur_FK_idx` (`Id_notificateur`,`Id_notifie`),
+  KEY `Id_notifie_FK_idx` (`Id_notifie`),
+  CONSTRAINT `Id_notificateur_FK` FOREIGN KEY (`Id_notificateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Id_notifie_FK` FOREIGN KEY (`Id_notifie`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `nofifications`
+-- Dumping data for table `notifications`
 --
 
-LOCK TABLES `nofifications` WRITE;
-/*!40000 ALTER TABLE `nofifications` DISABLE KEYS */;
-/*!40000 ALTER TABLE `nofifications` ENABLE KEYS */;
+LOCK TABLES `notifications` WRITE;
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -343,7 +348,7 @@ CREATE TABLE `visiteurs_copie` (
   `Email` varchar(100) NOT NULL,
   `Password` varchar(25) NOT NULL,
   `Access` int(11) NOT NULL,
-  `Avatar` varchar(255) NOT NULL,
+  `Avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -393,4 +398,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-20 18:34:44
+-- Dump completed on 2019-01-20 19:23:28
