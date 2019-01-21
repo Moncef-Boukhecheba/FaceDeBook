@@ -1,0 +1,6 @@
+Bienvenue a narnia 
+
+/PATH/ -- secured
+./loginfirst/ pour se connecter sur l'interface non-utilisateurs
+/login/ pour se connecter sur l'interface utilisateurs
+/favicon.ico/ icon

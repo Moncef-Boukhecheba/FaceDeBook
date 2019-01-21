@@ -1,13 +1,13 @@
 <?php 
 class APIManager
 {   
-    
     public $url = "";
-
+    
     public function __construct($url){
         $this->url = $url;
     }
-
+    
+    // cURL POST 
     public function post($Nom, $Prenom, $Email, $Pass, $Centre, $Access){  
         $postfields = array(
             'Nom' => $Nom,
@@ -21,7 +21,7 @@ class APIManager
         // On initialise la requête cURL 
         $curl = curl_init($this->url);
         
-        
+        // cURL OPTIONS
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Retourner les valeurs dans la fonction curl_exec 
         curl_setopt($curl, CURLOPT_POST, true);          // Requête = POST
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postfields)); // On envoie le tableau de données à insérer sous forme de JSON
@@ -33,10 +33,12 @@ class APIManager
         curl_close($curl); // On ferme la connexion
         return $return;
     }
-
+    
+    // cURL PUT 
     public function put($postfields){  
         $curl = curl_init($this->url);
         
+        // cURL OPTIONS
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT"); // Requête = PUT 
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($postfields));
@@ -48,9 +50,11 @@ class APIManager
         curl_close($curl);
         return $return;
     }
-
-    public function get($id){  
-        $curl = curl_init($this->url. '/'. $id);
+    
+    // cURL GET 
+    public function get($Email, $Pass){  
+        // Ici, on ajoute des paramètres à l'url
+        $curl = curl_init($this->url. '?email='. $Email.'&password='.$Pass); 
         
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, false);
         
@@ -58,19 +62,19 @@ class APIManager
         curl_close($curl);
         return $return;
     }
-
+    
+    // cURL DELETE
     public function delete($id){  
         $curl = curl_init($this->url. '/' .$id);
         
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE"); // Requête = DELETE
-
+        
         $return = curl_exec($curl);
         curl_close($curl);
         return $return;
     }   
 }
-
 $postfields = array(
     'Nom' => 'Boukhecheba',
     'Prenom' => 'Moncef',
@@ -78,8 +82,4 @@ $postfields = array(
     'id_visiteur' => 2
 );
 
-$Api = new APIManager("http://localhost:3000/visiteurs");
-$res = $Api->put($postfields);
-
-var_dump(json_decode($res));
 ?>
