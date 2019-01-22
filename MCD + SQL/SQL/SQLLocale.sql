@@ -16,6 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `categorie`
+--
+
+DROP TABLE IF EXISTS `categorie`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `categorie` (
+  `Id_categorie` int(11) NOT NULL AUTO_INCREMENT,
+  `Nom_categorie` varchar(50) NOT NULL,
+  PRIMARY KEY (`Id_categorie`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categorie`
+--
+
+LOCK TABLES `categorie` WRITE;
+/*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `commandes`
 --
 
@@ -56,10 +79,11 @@ CREATE TABLE `commentaires_evenements` (
   `Id_manifestation` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_commentaire`),
+  UNIQUE KEY `Id_commentaire_UNIQUE` (`Id_commentaire`),
   KEY `Commentaires_evenements_Manifestations_FK` (`Id_manifestation`),
-  KEY `Commentaires_evenements_Visiteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Commentaires_evenements_Visisteurs_Copie0_FK` (`Id_visiteur`),
   CONSTRAINT `Commentaires_evenements_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
-  CONSTRAINT `Commentaires_evenements_Visiteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  CONSTRAINT `Commentaires_evenements_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,10 +110,11 @@ CREATE TABLE `commentaires_photos` (
   `Id_photo` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_commentaire`),
+  UNIQUE KEY `Id_commentaire_UNIQUE` (`Id_commentaire`),
   KEY `Commentaires_photos_Photos_FK` (`Id_photo`),
-  KEY `Commentaires_photos_Visiteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Commentaires_photos_Visisteurs_Copie0_FK` (`Id_visiteur`),
   CONSTRAINT `Commentaires_photos_Photos_FK` FOREIGN KEY (`Id_photo`) REFERENCES `photos` (`Id_photo`),
-  CONSTRAINT `Commentaires_photos_Visiteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  CONSTRAINT `Commentaires_photos_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,7 +137,7 @@ DROP TABLE IF EXISTS `concerner`;
 CREATE TABLE `concerner` (
   `Id_produit` int(11) NOT NULL,
   `Id_commande` int(11) NOT NULL,
-  `Quantite` int(11) NOT NULL DEFAULT '1',
+  `Quantite` int(11) NOT NULL,
   PRIMARY KEY (`Id_produit`,`Id_commande`),
   KEY `Concerner_Commandes0_FK` (`Id_commande`),
   CONSTRAINT `Concerner_Commandes0_FK` FOREIGN KEY (`Id_commande`) REFERENCES `commandes` (`Id_commande`),
@@ -138,12 +163,15 @@ DROP TABLE IF EXISTS `idees`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `idees` (
   `Id_idee` int(11) NOT NULL AUTO_INCREMENT,
+  `Titre_idee` varchar(50) NOT NULL,
   `Date_idee` date NOT NULL,
   `Nbr_votes` int(11) NOT NULL,
+  `Contenu_idee` varchar(1000) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_idee`),
-  KEY `Idees_Visiteurs_Copie_FK` (`Id_visiteur`),
-  CONSTRAINT `Idees_Visiteurs_Copie_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  UNIQUE KEY `Id_idee_UNIQUE` (`Id_idee`),
+  KEY `Idees_Visisteurs_Copie_FK` (`Id_visiteur`),
+  CONSTRAINT `Idees_Visisteurs_Copie_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,14 +192,12 @@ DROP TABLE IF EXISTS `likes_evenements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `likes_evenements` (
-  `Id_like` int(11) NOT NULL AUTO_INCREMENT,
   `Id_manifestation` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
-  PRIMARY KEY (`Id_like`),
-  KEY `Likes_Evenements_Manifestations_FK` (`Id_manifestation`),
-  KEY `Likes_Evenements_Visiteurs_Copie0_FK` (`Id_visiteur`),
-  CONSTRAINT `Likes_Evenements_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
-  CONSTRAINT `Likes_Evenements_Visiteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  PRIMARY KEY (`Id_manifestation`,`Id_visiteur`),
+  KEY `Likes_evenements_Visisteurs_Copie0_FK` (`Id_visiteur`),
+  CONSTRAINT `Likes_evenements_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
+  CONSTRAINT `Likes_evenements_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -192,14 +218,12 @@ DROP TABLE IF EXISTS `likes_photos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `likes_photos` (
-  `Id_like` int(11) NOT NULL AUTO_INCREMENT,
   `Id_photo` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
-  PRIMARY KEY (`Id_like`),
-  KEY `Likes_photos_Photos_FK` (`Id_photo`),
-  KEY `Likes_photos_Visiteurs_Copie0_FK` (`Id_visiteur`),
+  PRIMARY KEY (`Id_photo`,`Id_visiteur`),
+  KEY `Likes_photos_Visisteurs_Copie0_FK` (`Id_visiteur`),
   CONSTRAINT `Likes_photos_Photos_FK` FOREIGN KEY (`Id_photo`) REFERENCES `photos` (`Id_photo`),
-  CONSTRAINT `Likes_photos_Visiteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  CONSTRAINT `Likes_photos_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,14 +251,14 @@ CREATE TABLE `manifestations` (
   `Date_manifestation` date NOT NULL,
   `Image_manifestation` varchar(255) NOT NULL,
   `Type_manifestation` varchar(25) NOT NULL,
-  `Active` tinyint(1) NOT NULL,
-  `Nbr_Likes` int(11) DEFAULT NULL,
-  `Nbr_Commentaires` int(11) DEFAULT NULL,
+  `Active` tinyint(1) NOT NULL DEFAULT '0',
+  `Nbr_Likes` int(11) unsigned zerofill NOT NULL,
+  `Nbr_Commentaires` int(11) unsigned zerofill NOT NULL,
   PRIMARY KEY (`Id_manifestation`),
-  KEY `Id_proposeur_FK_idx` (`Id_Proposeur`),
-  KEY `Id_validateur_FK` (`Id_Validateur`),
-  CONSTRAINT `Id_proposeur_FK` FOREIGN KEY (`Id_Proposeur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Id_validateur_FK` FOREIGN KEY (`Id_Validateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `Id_v_FK_idx` (`Id_Validateur`),
+  KEY `Id_p_FK_idx` (`Id_Proposeur`),
+  CONSTRAINT `Id_p_FK` FOREIGN KEY (`Id_Proposeur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Id_v_FK` FOREIGN KEY (`Id_Validateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -256,12 +280,11 @@ DROP TABLE IF EXISTS `notifications`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `notifications` (
   `Id_notif` int(11) NOT NULL AUTO_INCREMENT,
-  `Contenu_notif` varchar(1000) NOT NULL,
-  `Type_notif` varchar(25) NOT NULL,
   `Id_notificateur` int(11) NOT NULL,
   `Id_notifie` int(11) NOT NULL,
+  `Type_notif` int(11) NOT NULL,
   PRIMARY KEY (`Id_notif`),
-  KEY `Id_notificateur_FK_idx` (`Id_notificateur`,`Id_notifie`),
+  KEY `Id_notificateur_FK_idx` (`Id_notificateur`),
   KEY `Id_notifie_FK_idx` (`Id_notifie`),
   CONSTRAINT `Id_notificateur_FK` FOREIGN KEY (`Id_notificateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Id_notifie_FK` FOREIGN KEY (`Id_notifie`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -292,10 +315,11 @@ CREATE TABLE `photos` (
   `Id_manifestation` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_photo`),
+  UNIQUE KEY `Id_photo_UNIQUE` (`Id_photo`),
   KEY `Photos_Manifestations_FK` (`Id_manifestation`),
-  KEY `Photos_Visiteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Photos_Visisteurs_Copie0_FK` (`Id_visiteur`),
   CONSTRAINT `Photos_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
-  CONSTRAINT `Photos_Visiteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
+  CONSTRAINT `Photos_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -320,9 +344,12 @@ CREATE TABLE `produits` (
   `Nom_produit` varchar(100) NOT NULL,
   `Description_produit` varchar(1000) NOT NULL,
   `Prix` int(11) NOT NULL,
-  `Categorie` varchar(50) NOT NULL,
   `Image_produit` varchar(50) NOT NULL,
-  PRIMARY KEY (`Id_produit`)
+  `Id_categorie` int(11) NOT NULL,
+  PRIMARY KEY (`Id_produit`),
+  UNIQUE KEY `Id_produit_UNIQUE` (`Id_produit`),
+  KEY `Produits_Categorie_FK` (`Id_categorie`),
+  CONSTRAINT `Produits_Categorie_FK` FOREIGN KEY (`Id_categorie`) REFERENCES `categorie` (`Id_categorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -349,8 +376,10 @@ CREATE TABLE `visiteurs_copie` (
   `Email` varchar(100) NOT NULL,
   `Password` varchar(25) NOT NULL,
   `Access` int(11) NOT NULL,
-  `Avatar` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Id_visiteur`)
+  `Avatar` varchar(255) NOT NULL,
+  PRIMARY KEY (`Id_visiteur`),
+  UNIQUE KEY `Id_visiteur_UNIQUE` (`Id_visiteur`),
+  KEY `INDEX` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -374,10 +403,9 @@ CREATE TABLE `voter` (
   `Id_idee` int(11) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_idee`,`Id_visiteur`),
-  KEY `Id_idee_FK_idx` (`Id_idee`),
-  KEY `Id_visiteur_FK_idx` (`Id_visiteur`),
-  CONSTRAINT `Id_idee_FK` FOREIGN KEY (`Id_idee`) REFERENCES `idees` (`Id_idee`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Id_visiteur_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `Voter_Visisteurs_Copie0_FK` (`Id_visiteur`),
+  CONSTRAINT `Voter_Idees_FK` FOREIGN KEY (`Id_idee`) REFERENCES `idees` (`Id_idee`),
+  CONSTRAINT `Voter_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -399,4 +427,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-20 20:03:51
+-- Dump completed on 2019-01-22 20:12:00

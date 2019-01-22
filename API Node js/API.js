@@ -48,7 +48,7 @@ myRouter.route('/visiteurs')
 	}
 })
 .delete(function(req,res){
-	con.query("DELETE FROM visiteurs WHERE id_visiteur = ?", req.params.id_visiteur, function (err, result, fields) {
+	con.query("DELETE FROM visiteurs WHERE id_visiteur = ?", req.query.id_visiteur, function (err, result, fields) {
 		if (err) throw err;
 		res.send(result);
 	});
