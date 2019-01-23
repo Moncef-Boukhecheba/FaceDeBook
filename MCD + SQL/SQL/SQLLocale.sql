@@ -155,6 +155,32 @@ LOCK TABLES `concerner` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `etudiants_inscrits`
+--
+
+DROP TABLE IF EXISTS `etudiants_inscrits`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `etudiants_inscrits` (
+  `id_visiteur` int(11) NOT NULL,
+  `id_manifestation` int(11) NOT NULL,
+  PRIMARY KEY (`id_visiteur`,`id_manifestation`),
+  KEY `id_manifestation_FK_idx` (`id_manifestation`),
+  CONSTRAINT `id_manifestation_FK` FOREIGN KEY (`id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_visiteur_FK` FOREIGN KEY (`id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `etudiants_inscrits`
+--
+
+LOCK TABLES `etudiants_inscrits` WRITE;
+/*!40000 ALTER TABLE `etudiants_inscrits` DISABLE KEYS */;
+/*!40000 ALTER TABLE `etudiants_inscrits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `idees`
 --
 
@@ -252,8 +278,8 @@ CREATE TABLE `manifestations` (
   `Image_manifestation` varchar(255) NOT NULL,
   `Type_manifestation` varchar(25) NOT NULL,
   `Active` tinyint(1) NOT NULL DEFAULT '0',
-  `Nbr_Likes` int(11) unsigned zerofill NOT NULL,
-  `Nbr_Commentaires` int(11) unsigned zerofill NOT NULL,
+  `Nbr_Likes` int(11) unsigned NOT NULL DEFAULT '0',
+  `Nbr_Commentaires` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id_manifestation`),
   KEY `Id_v_FK_idx` (`Id_Validateur`),
   KEY `Id_p_FK_idx` (`Id_Proposeur`),
@@ -427,4 +453,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-22 20:12:00
+-- Dump completed on 2019-01-23 18:44:30
