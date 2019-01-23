@@ -1,31 +1,25 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="fr">
 
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Connectez-vous à votre compte CESI BDE Alger">
     <meta name="author" content="A2 CESI">
 
-    <title>BDE</title>
+    <title>Connectez-vous à votre compte</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
   </head>
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <a class="navbar-brand" href="#">
-      <img src="images/logo-cesi.png" alt="">
-    </a>
-    <h5 class="my-0 mr-md-auto font-weight-normal"></h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-
-    </nav>
+  
+  <div class="d-flex flex-row align-items-center justify-content-between p-3 mb-3 bg-white border-bottom box-shadow">
+      <a href="http://www.cesi.fr"><img class ="img-responsive" src="images/logo-cesi.png" alt="Logo CESI">
+</a>
   </div>
-
 
   <body>
     <div class="container">
@@ -35,7 +29,13 @@
             <div class="card-body">
               <img src="images/BDE.png" id="cesi" class="img-fluid" alt="Responsive image">
               <h5 class="card-title text-center">Se connecter</h5>
-              <form class="form-signin" method="post" action="loginAction.php">
+              <form class="form-signin" method="post" action="./actions/loginAction.php">
+              <?php 
+              if( isset($_SESSION['failed']) && $_SESSION['failed']){
+                echo "<div class ='text-center text-danger'><p>L'e-mail ou le mot de passe est incorrect</p></div>"; 
+                session_destroy();
+              } 
+              ?>
                 <div class="form-label-group">
                   <input type="text" id="inputuser" class="form-control" placeholder="E-Mail" name="email"
                          required autofocus>
@@ -54,7 +54,7 @@
                 </div>
                 <button class="btn btn-lg btn-outline-primary btn-block w-200 mb-3 mt-5 text-uppercase" type="submit">Sign
                   in</button>
-
+                
                 <h5 class="mb-0 text-center"><a href="register.php">Je ne suis pas encore membre</a></h5>
                 </h4>
               </form>
@@ -62,13 +62,11 @@
         </div>
       </div>
     </div>
-    </div>
 
   <footer class="bd-footer text-muted">
 
     <div class="footer-copyright text-center py-3">© 2019 Copyright:
-      <a href="https://mdbootstrap.com/education/bootstrap/"> BDE CESI EXIA</a>
-
+      <a href="https://mdbootstrap.com/education/bootstrap/">BDE CESI EXIA</a>
     </div>
 
     <!-- jQuery first, then Popper, then Bootstrap JS. -->

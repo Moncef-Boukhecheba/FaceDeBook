@@ -20,7 +20,6 @@
 								<?php
                 require 'functions/header.php';                    
                     ?>  
-
 		<!-- Content -->
 								<section>
 									<header class="main">
@@ -29,7 +28,7 @@
 									</header>
 
 
-													<span class="image fit" "><img onclick="jump('one');changeIt(this)" src="images/pic11.jpg" alt="" /></span>
+													<span class="image fit"><img onclick="jump('one');changeIt(this)" src="images/pic11.jpg" alt="" /></span>
 
 													<div class="box alt">
 														<div class="row gtr-50 gtr-uniform">
