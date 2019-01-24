@@ -26,7 +26,7 @@ CREATE TABLE `categorie` (
   `Id_categorie` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_categorie` varchar(50) NOT NULL,
   PRIMARY KEY (`Id_categorie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +35,7 @@ CREATE TABLE `categorie` (
 
 LOCK TABLES `categorie` WRITE;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+INSERT INTO `categorie` VALUES (1,'Divers'),(2,'Informatique'),(3,'Electronique'),(4,'Pulls');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,6 +53,7 @@ CREATE TABLE `commandes` (
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_commande`),
   KEY `Commandes_Visisteurs_Copie_FK` (`Id_visiteur`),
+  KEY `Id_commande` (`Id_commande`),
   CONSTRAINT `Commandes_Visisteurs_Copie_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -82,6 +84,7 @@ CREATE TABLE `commentaires_evenements` (
   UNIQUE KEY `Id_commentaire_UNIQUE` (`Id_commentaire`),
   KEY `Commentaires_evenements_Manifestations_FK` (`Id_manifestation`),
   KEY `Commentaires_evenements_Visisteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Id_commentaire` (`Id_commentaire`),
   CONSTRAINT `Commentaires_evenements_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
   CONSTRAINT `Commentaires_evenements_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -113,6 +116,7 @@ CREATE TABLE `commentaires_photos` (
   UNIQUE KEY `Id_commentaire_UNIQUE` (`Id_commentaire`),
   KEY `Commentaires_photos_Photos_FK` (`Id_photo`),
   KEY `Commentaires_photos_Visisteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Id_commentaire` (`Id_commentaire`),
   CONSTRAINT `Commentaires_photos_Photos_FK` FOREIGN KEY (`Id_photo`) REFERENCES `photos` (`Id_photo`),
   CONSTRAINT `Commentaires_photos_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -140,6 +144,7 @@ CREATE TABLE `concerner` (
   `Quantite` int(11) NOT NULL,
   PRIMARY KEY (`Id_produit`,`Id_commande`),
   KEY `Concerner_Commandes0_FK` (`Id_commande`),
+  KEY `Id_produit` (`Id_produit`),
   CONSTRAINT `Concerner_Commandes0_FK` FOREIGN KEY (`Id_commande`) REFERENCES `commandes` (`Id_commande`),
   CONSTRAINT `Concerner_Produits_FK` FOREIGN KEY (`Id_produit`) REFERENCES `produits` (`Id_produit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -189,16 +194,16 @@ DROP TABLE IF EXISTS `idees`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `idees` (
   `Id_idee` int(11) NOT NULL AUTO_INCREMENT,
-  `Titre_idee` varchar(50) NOT NULL,
   `Date_idee` date NOT NULL,
-  `Nbr_votes` int(11) NOT NULL,
+  `Nbr_votes` int(11) unsigned NOT NULL DEFAULT '0',
   `Contenu_idee` varchar(1000) NOT NULL,
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_idee`),
   UNIQUE KEY `Id_idee_UNIQUE` (`Id_idee`),
   KEY `Idees_Visisteurs_Copie_FK` (`Id_visiteur`),
+  KEY `Id_idee` (`Id_idee`),
   CONSTRAINT `Idees_Visisteurs_Copie_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,6 +212,7 @@ CREATE TABLE `idees` (
 
 LOCK TABLES `idees` WRITE;
 /*!40000 ALTER TABLE `idees` DISABLE KEYS */;
+INSERT INTO `idees` VALUES (1,'2019-01-24',0,'Ce serait cool de faire un gros tournoi fifa, je joue pas à fifa mais je vais vous louer ma PS4 pour l\'occasion',1),(2,'2019-01-24',0,'L\'équipe, déjà je peux statistiquement pas être loup mais hadik ça a pas de rapport avec notre situation actuelle des choses, wella si, lmohim ana 7abit necreyi jeu chkoun m3aya ?',2),(3,'2019-01-24',0,'Hey les jeunes ça vous dirait qu\'on fasse un mega blind test ? Berk les animes c\'est mort et Reyhan il fait l\'arbitre (psk sinon il va shazamer) ',4),(4,'2019-01-24',0,'POOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO',3);
 /*!40000 ALTER TABLE `idees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,6 +289,7 @@ CREATE TABLE `manifestations` (
   PRIMARY KEY (`Id_manifestation`),
   KEY `Id_v_FK_idx` (`Id_Validateur`),
   KEY `Id_p_FK_idx` (`Id_Proposeur`),
+  KEY `Id_manifestation` (`Id_manifestation`),
   CONSTRAINT `Id_p_FK` FOREIGN KEY (`Id_Proposeur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Id_v_FK` FOREIGN KEY (`Id_Validateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -342,8 +349,9 @@ CREATE TABLE `photos` (
   `Id_visiteur` int(11) NOT NULL,
   PRIMARY KEY (`Id_photo`),
   UNIQUE KEY `Id_photo_UNIQUE` (`Id_photo`),
-  KEY `Photos_Manifestations_FK` (`Id_manifestation`),
-  KEY `Photos_Visisteurs_Copie0_FK` (`Id_visiteur`),
+  KEY `Id_photo` (`Id_photo`),
+  KEY `Id_manifestation` (`Id_manifestation`),
+  KEY `Id_visiteur` (`Id_visiteur`),
   CONSTRAINT `Photos_Manifestations_FK` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`),
   CONSTRAINT `Photos_Visisteurs_Copie0_FK` FOREIGN KEY (`Id_visiteur`) REFERENCES `visiteurs_copie` (`Id_visiteur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -375,8 +383,9 @@ CREATE TABLE `produits` (
   PRIMARY KEY (`Id_produit`),
   UNIQUE KEY `Id_produit_UNIQUE` (`Id_produit`),
   KEY `Produits_Categorie_FK` (`Id_categorie`),
+  KEY `Id_produit` (`Id_produit`),
   CONSTRAINT `Produits_Categorie_FK` FOREIGN KEY (`Id_categorie`) REFERENCES `categorie` (`Id_categorie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,7 +394,137 @@ CREATE TABLE `produits` (
 
 LOCK TABLES `produits` WRITE;
 /*!40000 ALTER TABLE `produits` DISABLE KEYS */;
+INSERT INTO `produits` VALUES (3,'Mug (I <3 EXIA)','Un magnifique Mug qui ira avec tout ce que vous portez, autant dire qu\'il fait largement.. le café ! HA !',35,'mug.jpg',1),(4,'Laptop I7 6700k GTX 1060 GAMER EDITION','Ce laptop est un assez bon laptop, parfait pour jouer au démineur.',1500,'laptop.jpg',2),(5,'Pull CESI EXIA','Un magnifique pull rouge qui ira bien avec tout ce qui est bleu, noir, et rouge.',45,'pull_cesi.jpg',4);
 /*!40000 ALTER TABLE `produits` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `signalements_comm_e`
+--
+
+DROP TABLE IF EXISTS `signalements_comm_e`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `signalements_comm_e` (
+  `Id_notif` int(11) NOT NULL,
+  `Id_commentaire` int(11) NOT NULL,
+  PRIMARY KEY (`Id_notif`,`Id_commentaire`),
+  KEY `Id_commentaire_FK_idx` (`Id_commentaire`),
+  CONSTRAINT `Id_commentaire_FK` FOREIGN KEY (`Id_commentaire`) REFERENCES `commentaires_evenements` (`Id_commentaire`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Id_notification_FK` FOREIGN KEY (`Id_notif`) REFERENCES `notifications` (`Id_notif`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signalements_comm_e`
+--
+
+LOCK TABLES `signalements_comm_e` WRITE;
+/*!40000 ALTER TABLE `signalements_comm_e` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signalements_comm_e` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `signalements_comm_p`
+--
+
+DROP TABLE IF EXISTS `signalements_comm_p`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `signalements_comm_p` (
+  `Id_notif` int(11) NOT NULL,
+  `Id_commentaire` int(11) NOT NULL,
+  PRIMARY KEY (`Id_notif`,`Id_commentaire`),
+  KEY `Id_commentaire_idx` (`Id_commentaire`),
+  CONSTRAINT `Id_commentaire` FOREIGN KEY (`Id_commentaire`) REFERENCES `commentaires_photos` (`Id_commentaire`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Id_notif_FK` FOREIGN KEY (`Id_notif`) REFERENCES `notifications` (`Id_notif`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signalements_comm_p`
+--
+
+LOCK TABLES `signalements_comm_p` WRITE;
+/*!40000 ALTER TABLE `signalements_comm_p` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signalements_comm_p` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `signalements_manifestation`
+--
+
+DROP TABLE IF EXISTS `signalements_manifestation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `signalements_manifestation` (
+  `Id_notif` int(11) NOT NULL,
+  `Id_manifestation` int(11) NOT NULL,
+  PRIMARY KEY (`Id_notif`,`Id_manifestation`),
+  KEY `fkf_idx` (`Id_manifestation`),
+  KEY `fkn_idx` (`Id_notif`),
+  CONSTRAINT `fkf` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fkn` FOREIGN KEY (`Id_notif`) REFERENCES `notifications` (`Id_notif`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signalements_manifestation`
+--
+
+LOCK TABLES `signalements_manifestation` WRITE;
+/*!40000 ALTER TABLE `signalements_manifestation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signalements_manifestation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `signalements_photos`
+--
+
+DROP TABLE IF EXISTS `signalements_photos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `signalements_photos` (
+  `Id_notif` int(11) NOT NULL,
+  `Id_photo` int(11) NOT NULL,
+  PRIMARY KEY (`Id_notif`,`Id_photo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `signalements_photos`
+--
+
+LOCK TABLES `signalements_photos` WRITE;
+/*!40000 ALTER TABLE `signalements_photos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `signalements_photos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `validation_idee`
+--
+
+DROP TABLE IF EXISTS `validation_idee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `validation_idee` (
+  `Id_notif` int(11) NOT NULL,
+  `Id_manifestation` int(11) NOT NULL,
+  PRIMARY KEY (`Id_notif`,`Id_manifestation`),
+  KEY `Fkfm_idx` (`Id_manifestation`),
+  KEY `Fkfn_idx` (`Id_notif`),
+  CONSTRAINT `Fkfm` FOREIGN KEY (`Id_manifestation`) REFERENCES `manifestations` (`Id_manifestation`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Fkfn` FOREIGN KEY (`Id_notif`) REFERENCES `notifications` (`Id_notif`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `validation_idee`
+--
+
+LOCK TABLES `validation_idee` WRITE;
+/*!40000 ALTER TABLE `validation_idee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `validation_idee` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -406,7 +545,7 @@ CREATE TABLE `visiteurs_copie` (
   PRIMARY KEY (`Id_visiteur`),
   UNIQUE KEY `Id_visiteur_UNIQUE` (`Id_visiteur`),
   KEY `INDEX` (`Id_visiteur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,6 +554,7 @@ CREATE TABLE `visiteurs_copie` (
 
 LOCK TABLES `visiteurs_copie` WRITE;
 /*!40000 ALTER TABLE `visiteurs_copie` DISABLE KEYS */;
+INSERT INTO `visiteurs_copie` VALUES (1,'Boukhecheba','Moncef','moncefbkb@gmail.com','Moncef6',3,'moncef.jpg'),(2,'Chellouf','Reyhan','Johndoe69@gmail.com','Reyhan6',3,'reyhan.jpg'),(3,'Ouldslimane','Lamine','laminepoo@gmail.com','Lamine6',3,'lamine.jpg'),(4,'Meftahi','Samy','maclesamy@gmail.com','Samy6',3,'samy.jpg');
 /*!40000 ALTER TABLE `visiteurs_copie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,4 +593,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-23 18:44:30
+-- Dump completed on 2019-01-24 22:07:27
