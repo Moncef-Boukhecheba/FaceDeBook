@@ -1,20 +1,8 @@
-<!DOCTYPE HTML>
-<head>
+<section>
+						
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-</head>
-	<?php
-                require 'header.php';                    
-                    ?>  
-
-							
-
-        
-								<section>
-						
-
-
 
 <div class="container content">
     <div class="heading">
@@ -78,21 +66,3 @@
 
 
 								</section>
-
-								</div>
-								</div>
-				<!-- Sidebar -->
-						<?php
-                require 'sidebar.php';                    
-                    ?>  
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>

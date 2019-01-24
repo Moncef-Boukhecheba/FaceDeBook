@@ -32,7 +32,7 @@
                 <div class="main-login main-center">
                 <?php 
                   if( isset($_SESSION['failed']) && $_SESSION['failed']){
-                    echo "<div class ='text-center text-danger'><p>L'email ou le mot de passe est incorrect</p></div>"; 
+                    echo "<div class ='text-center text-danger'><p>L'email existe déjà</p></div>"; 
                     session_destroy();
                   } 
                   ?>
@@ -77,7 +77,6 @@
                           <span class="input-group-addon"><i aria-hidden="true"></i></span>
                           <input type="password" class="rounded form-control" name="password" id="password" placeholder="Mot de passe"/ required >
                           <label id="invalid-pass" for="password" class="invalid-feedback" style="display:none">Le mot de passe doit contenir au moins une majuscule et un chiffre</label>
-
                         </div>
                       </div>
                     </div>
@@ -110,7 +109,7 @@
 
                     <div class="form-group ">
                       <button class="btn btn-lg btn-outline-primary btn-block w-200 mb-3 text-uppercase" type="submit">S'inscrire</button>
-                      <label id="invalid-submit" for="submit" class="invalid-feedback" style="display:none">Veuillez fournir des informations valides</label>
+                      <label id="invalid-submit" for="submit" class="text-center invalid-feedback" style="display:none">Veuillez fournir des informations valides</label>
                     </div>
                   </form>
               </div>
@@ -124,12 +123,10 @@
           <a href="https://mdbootstrap.com/education/bootstrap/"> BDE CESI EXIA</a>
         </div>
 
-        
-          <!-- jQuery first, then Popper, then Bootstrap JS. -->
           <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-          <script src="scripts/form_validation.js" ></script>
+          <script src="./scripts/form_validation.js" ></script>
 
         
         </body>

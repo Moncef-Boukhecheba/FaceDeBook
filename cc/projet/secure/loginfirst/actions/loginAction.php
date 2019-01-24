@@ -28,7 +28,7 @@ if (!empty($email) || !empty($pass)) {
         $Api = new APIManager("http://localhost:3000/visiteurs");
         $res = $Api->get($email, $pass);
         
-        if (json_decode($res)){
+        if (json_decode($res) && $res !='{"message":"No token provided."}' && $res !='{"message":"invalid token"}' ){
             $assoclist = json_decode($res, true); // Le résultat json est converti en tableau associatif
             $assoc = $assoclist[0];
             // TODO : INSERT BDD
@@ -53,8 +53,8 @@ function setSession_success($data){
     $_SESSION['Avatar'] = $data['Avatar'];
     $_SESSION['Nom'] = $data['Nom'];
     $_SESSION['Prenom'] = $data['Prenom'];
-    //header('Location: ../../login/index.php');
-    var_dump($data);
+    header('Location: ../../login/index.php');
+    
 }
 
 function setSession_failed(){

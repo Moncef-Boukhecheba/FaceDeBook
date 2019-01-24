@@ -6,15 +6,17 @@ var valid_pass = false;
 var valid_confirm = false;
 
 function validateConfirm(){
-    if(pass.val() != confirm.val()) {
-        confirm.addClass("is-invalid");
-        $("#invalid-confirm").css("display", "block");
-        valid_confirm = false;
-        
-    } else {
-        confirm.removeClass("is-invalid");
-        $("#invalid-confirm").css("display", "none");
-        valid_confirm = true;
+    if(confirm.val()!=""){
+        if(pass.val() != confirm.val()) {
+            confirm.addClass("is-invalid");
+            $("#invalid-confirm").css("display", "block");
+            valid_confirm = false;
+            
+        } else {
+            confirm.removeClass("is-invalid");
+            $("#invalid-confirm").css("display", "none");
+            valid_confirm = true;
+        }
     }
 }
 
@@ -62,7 +64,6 @@ function validationForm(){
         return false;
     }
 }
-
 $("#confirm, #password").focusout(validateConfirm);
 $("#email").focusout(validateEmail);
 $("#password").focusout(validatePass);
