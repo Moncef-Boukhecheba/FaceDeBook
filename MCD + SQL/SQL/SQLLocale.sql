@@ -26,7 +26,7 @@ CREATE TABLE `categorie` (
   `Id_categorie` int(11) NOT NULL AUTO_INCREMENT,
   `Nom_categorie` varchar(50) NOT NULL,
   PRIMARY KEY (`Id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `categorie` (
 
 LOCK TABLES `categorie` WRITE;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
-INSERT INTO `categorie` VALUES (1,'Divers'),(2,'Informatique'),(3,'Electronique'),(4,'Pulls');
+INSERT INTO `categorie` VALUES (1,'Divers'),(2,'Informatique'),(3,'Electronique'),(4,'Pulls'),(5,'Pantalons');
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,20 +279,22 @@ CREATE TABLE `manifestations` (
   `Id_manifestation` int(11) NOT NULL AUTO_INCREMENT,
   `Id_Validateur` int(11) NOT NULL,
   `Id_Proposeur` int(11) NOT NULL,
+  `Titre_manifestation` varchar(100) NOT NULL,
   `Contenu_manifestation` varchar(5000) NOT NULL,
   `Date_manifestation` date NOT NULL,
   `Image_manifestation` varchar(255) NOT NULL,
-  `Type_manifestation` varchar(25) NOT NULL,
-  `Active` tinyint(1) NOT NULL DEFAULT '0',
+  `Active` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `Nbr_Likes` int(11) unsigned NOT NULL DEFAULT '0',
   `Nbr_Commentaires` int(11) unsigned NOT NULL DEFAULT '0',
+  `Payante` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `Reccurrente` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id_manifestation`),
   KEY `Id_v_FK_idx` (`Id_Validateur`),
   KEY `Id_p_FK_idx` (`Id_Proposeur`),
   KEY `Id_manifestation` (`Id_manifestation`),
   CONSTRAINT `Id_p_FK` FOREIGN KEY (`Id_Proposeur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Id_v_FK` FOREIGN KEY (`Id_Validateur`) REFERENCES `visiteurs_copie` (`Id_visiteur`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,6 +303,7 @@ CREATE TABLE `manifestations` (
 
 LOCK TABLES `manifestations` WRITE;
 /*!40000 ALTER TABLE `manifestations` DISABLE KEYS */;
+INSERT INTO `manifestations` VALUES (1,4,4,'Lan game au CESI EXIA','Rendez-vous le samedi 9 février 2019 de 13h00 à 20h00 sur le campus CESI d\'Alger pour participer à une LAN GAME organisée par le BDE (Bureau des Étudiants) du campus.\r\n\r\nAU PROGRAMME : \r\n\r\nTournoi de Counter-Strike : Global Offensive\r\nTournoi de League of Legends\r\nTournoi de Rocket League\r\nTournoi de Hearthstone\r\nTournoi de Naruto Storm\r\nTournoi de Street Fighter\r\nTournoi de Mortal Kombat\r\n\r\nTout ça en 2h et demi dans la vie associative.','2019-01-24','langame.jpg',0,0,0,0,0),(2,2,2,'La Cybersécurité au quotidien dans les entreprises','CESI Ecole d’ingénieurs vous invite à cette conférence gratuite animée par Sebastien VIOU et Florent FELS, le mardi 15 janvier 2019 à 18h.\r\nLa Cybersécurité est aujourd’hui un enjeu majeur pour les entreprises: aussi bien pour les grands groupes souvent sujets à des attaques, que pour les PME/ETI qui auraient des difficultés à se remettre de telles agressions.\r\n\r\nLes menaces sont nombreuses : déni de service, mails malveillants, piratages et fuites de données, détournement d’usages de serveurs, manipulation de crypto-monnaie… Le département cybersécurité joue donc un rôle crucial et critique dans l’entreprises en protégeant son patrimoine et sa capacité commerciale. Et pour garantir l’intégrité des systèmes IT et des données, il doit être en mesure d’anticiper les menaces et de réagir rapidement face aux attaques.\r\n\r\nRiches de leurs expérience chez SFR et EDF, Sebastien VIOU et Florent FELS – Gestionnaire du Système d’information vous présenteront:\r\n\r\nLa Cybersécurité au quotidien dans les entreprises\r\n\r\n1. Comprendre la Cybersécurité\r\n2. Se protéger et protéger ses clients\r\n3. Les métiers de la Cybersécurité\r\n\r\nUn apéritif clôturera cet événement aux alentours de 19h30.','2019-01-24','cybersecurite.jpg',1,0,0,1,0),(3,3,3,'SAVE THE DATE !','La promotion Manager des Systèmes d’Information de CESI Nanterre organise une conférence le jeudi 24 janvier.\r\n\r\nLes sujets porteront sur : – l’Intelligence Artificielle, – le RGPD, – l’impact de l’IT sur nos vies.\r\n\r\nInscrivez-vous : https://lnkd.in/gjh7rSR\r\n\r\nNous vous attendons nombreux !','2019-01-28','ia.jpg',1,0,0,0,0),(4,1,1,'Conférence : L’Entreprise 2.0 : Les objets connectés\r\n','les élèves de 5° années de l’École d’Ingénieurs CESI, spécialité informatique, organisent une conférence sur les objets connectés dans les systèmes d’informations.\r\n\r\nCelle-ci aura lieu lieu salle 2, au CESI d’Orléans, le 29 novembre à 16H.\r\n\r\nUn buffet sera servi à l’issue de l’événement.\r\n\r\nLe lien d’inscription est le suivant : https://docs.google.com/forms/d/e/1FAIpQLSch34YaudvuGpifrU70-RsLnS9p-JY3NiLf5r_IVjr8vFvvDg/viewform\r\n\r\nOn vous attend nombreux !','2019-01-30','acar.jpg',1,0,0,0,1);
 /*!40000 ALTER TABLE `manifestations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +388,7 @@ CREATE TABLE `produits` (
   KEY `Produits_Categorie_FK` (`Id_categorie`),
   KEY `Id_produit` (`Id_produit`),
   CONSTRAINT `Produits_Categorie_FK` FOREIGN KEY (`Id_categorie`) REFERENCES `categorie` (`Id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +397,7 @@ CREATE TABLE `produits` (
 
 LOCK TABLES `produits` WRITE;
 /*!40000 ALTER TABLE `produits` DISABLE KEYS */;
-INSERT INTO `produits` VALUES (3,'Mug (I <3 EXIA)','Un magnifique Mug qui ira avec tout ce que vous portez, autant dire qu\'il fait largement.. le café ! HA !',35,'mug.jpg',1),(4,'Laptop I7 6700k GTX 1060 GAMER EDITION','Ce laptop est un assez bon laptop, parfait pour jouer au démineur.',1500,'laptop.jpg',2),(5,'Pull CESI EXIA','Un magnifique pull rouge qui ira bien avec tout ce qui est bleu, noir, et rouge.',45,'pull_cesi.jpg',4);
+INSERT INTO `produits` VALUES (3,'Mug (I <3 EXIA)','Un magnifique Mug qui ira avec tout ce que vous portez, autant dire qu\'il fait largement.. le café ! HA !',35,'mug.jpg',1),(4,'Laptop I7 6700k GTX 1060 GAMER EDITION','Ce laptop est un assez bon laptop, parfait pour jouer au démineur.',1500,'laptop.jpg',2),(5,'Pull CESI EXIA','Un magnifique pull rouge qui ira bien avec tout ce qui est bleu, noir, et rouge.',45,'pull_cesi.jpg',4),(6,'Pantalon CESI EXIA','Ce pantalon est un des rares vetements qui vont avec le pull que vous avez sans doute acheté auprès de nous.',800,'pantalon_cesi.jpg',5);
 /*!40000 ALTER TABLE `produits` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -593,4 +596,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-24 22:07:27
+-- Dump completed on 2019-01-24 22:33:52
