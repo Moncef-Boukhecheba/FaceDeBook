@@ -18,7 +18,7 @@
 									</header>
 
 
-													<a href="#" class="image"><img onclick="jump('one');changeIt(this)" src="images/pic11.jpg" alt="" /></a>
+												
 													
 														
 													<div class="box alt">
@@ -33,6 +33,7 @@
                 <div class="col-3 float-left"><img class="img-fluid" src="images/pic03.jpg"></div>
                 <div class="col-3 float-left"><img class="img-fluid" src="images/pic02.jpg"></div>
                 <div class="col-3 float-left"><img class="img-fluid" src="images/pic01.jpg"></div>
+                
             </div>
         </div>
         <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">
@@ -76,13 +77,16 @@
 <section>
 <div id="one"></div>
 													
-    <p><span class="image left"><img src="images/pic01.jpg" id="image" alt="" /><h2>Titre Evenements</h2></span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
+    <p><span class="image left"><img src="images/pic01.jpg" id="image" alt="" />
+    <h2>Titre Evenements</h2>
+    </span>Lorem ipsum dolor sit accumsan interdum nisi, quis tincidunt felis sagittis eget.
+     tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
 													
 													<ul class="icons">
 							        <li  ><a href="#"class="button"><img src="images/like.png" style="margin-top:3px;"class="img-responsive" alt=""/> </a></li>
                                     <li  ><a href="#" class="button"><img  src="images/chat-bubble.png" class="img-responsive" alt=""/> </a></li>	 
                                     <li  ><a href="#" class="button"><img  src="images/exclaa.png" class="img-responsive" alt=""/> </a></li>	
-                                    <li  ><a href="#" class="button"><img  src="images/connection.png" class="img-responsive" alt=""/>Participer</a></li>	
+                                    <li  ><button  class="button"><img  src="images/connection.png" class="img-responsive" alt=""/>Participer</button></li>	
                                     	                   
                                     	                   
                       	

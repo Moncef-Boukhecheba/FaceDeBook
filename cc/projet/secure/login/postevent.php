@@ -20,36 +20,26 @@
 <div id="myDIV">
         <div class="col-xs-12 col-sm-12 col-md-4 well well-sm">
             <legend><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Evenements</legend>
-            <form action="#" method="post" class="form" role="form">
+            
+           
+            
+            <form action="actions/evenement/execute.php" method="post" class="form" enctype="multipart/form-data" >
+            <input class="id_idee" type="hidden" name="action" value="ajouter" />
             <input class="form-control" name="eventName" placeholder="Nombre del evento" type="text" />
             <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required" placeholder="Description de L'evenements"></textarea>
             <label for="">
-                Formulaire d'evenements</label>
-            <div class="row">
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Day">Jours</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Month">Mois</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Year">Anee</option>
-                    </select>
-                </div>
-            </div>
+               Date evenement</label>
+               <input class="form-control" name="dateEvent" placeholder="example : 2018-06-15" type="text" />
             <label>Type Evenements</label>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <select class="form-control">
-                        <option value="Tipo">Payant</option>
-						<option value="Tipo">Gratuit</option>
-						<option value="Tipo">tralalalala</option>
-						<option value="Tipo">blalblalblablla</option>
+                    <select class="form-control" name="P">
+                        <option value="1">Payant</option>
+						<option value="0">Gratuit</option>
+                    </select>
+                    <select class="form-control" name="R">
+                        <option value="1">reccurrente</option>
+						<option value="0">instant</option>
                     </select>
                 </div>    
             </div>
@@ -58,24 +48,23 @@
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div class="input-group image-preview">
-                <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
                 <span class="input-group-btn">
                     <!-- image-preview-clear button -->
-                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
+                    
                     <!-- image-preview-input -->
                     <div class="btn btn-default image-preview-input">
-                        <span class="glyphicon glyphicon-folder-open"></span>
-                        <span class="image-preview-input-title">Chercher</span>
-                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                  
+    
+    
+                    Select image to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
                     </div>
                 </span>
             </div><!-- /input-group image-preview [TO HERE]-->
                 </div>    
-            </div>
-            <button class="btn btn-lg btn-default btn-block" type="submit">
-                Cree L'evenements</button>
+            </div> 
+            <input class="btn btn-lg btn-default btn-block" type="submit" value="Cree L'evenements" name="submit">
+           
             </form>
         </div>
     </div>
