@@ -40,7 +40,7 @@ function validatePass(){
     var val = pass.val();
     var reg = new RegExp('(?=.*?[0-9])(?=.*?[A-Z]).+');
     
-    if (!reg.test(val)){
+    if (!reg.test(val) && pass.val()!=""){
         pass.addClass("is-invalid");
         $("#invalid-pass").css("display", "block");
         valid_pass = false;
